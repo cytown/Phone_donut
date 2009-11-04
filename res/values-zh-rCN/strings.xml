@@ -541,6 +541,7 @@
     <string name="notification_missedCallsMsg" msgid="4575787816055205600">"<xliff:g id="NUM_MISSED_CALLS">%s</xliff:g> 个未接电话"</string>
     <string name="notification_missedCallTicker" msgid="504686252427747209">"来自<xliff:g id="MISSED_CALL_FROM">%s</xliff:g>的未接电话"</string>
     <string name="notification_ongoing_call_format" msgid="227216462548540316">"当前通话 (<xliff:g id="DURATION">%s</xliff:g>)"</string>
+<string name="notification_ongoing_calling_format">"当前拨出（<xliff:g id="DURATION">%s</xliff:g>）"</string>
     <string name="notification_on_hold" msgid="3480694969511790465">"保持"</string>
     <string name="notification_voicemail_title" msgid="8933468752045550523">"新语音邮件"</string>
     <!-- no translation found for notification_voicemail_title_count (4366360747660929916) -->
@@ -591,4 +592,25 @@
     <!-- no translation found for dtmf_tone_entries:1 (2883365539347850535) -->
     <!-- no translation found for network_message (5673682885938122239) -->
     <skip />
+<string name="advanced_setting">高级设置 V.20.1</string>
+<string name="vibrate_outgoing">接听震动</string>
+<string name="vibrate_outgoing_sum">当对方接听时震动.</string>
+<string name="vibrate_45">45秒震动</string>
+<string name="vibrate_45_sum">呼出通话时到45秒时震动.</string>
+<string name="vibrate_hangup">挂断震动</string>
+<string name="vibrate_hangup_sum">通话结束时震动.</string>
+<string name="screen_awake">屏幕保持</string>
+<string name="screen_awake_sum">通话时, 屏幕等待更长时间才关闭.</string>
+<string name="led_notify_call">未接电话LED通知</string>
+<string name="led_notify_call_sum">有未接电话时LED会闪烁.</string>
+<string name="led_show_organ">显示公司名称</string>
+<string name="led_show_organ_sum">打电话界面显示公司名称在姓名后面.</string>
+<string name="vibrate_call_waiting">呼叫等待震动</string>
+<string name="vibrate_call_waiting_sum">当呼叫等待时震动通知.</string>
+<string name="menu_addBlackList">加入黑名单</string>
+<string name="black_list">黑名单</string>
+<string name="black_list_sum">列入黑名单的来电会被自动挂断.</string>
+<string name="add_black">添加来电</string>
+<string name="remove_black">从名单中去除 %s</string>
+
 </resources>

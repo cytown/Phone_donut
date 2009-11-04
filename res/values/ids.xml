@@ -30,4 +30,5 @@
     <item type="id" name="menuAnswerAndEnd" />
     <item type="id" name="menuAnswer" />
     <item type="id" name="menuIgnore" />
+    <item type="id" name="menuAddBlackList" />
 </resources>

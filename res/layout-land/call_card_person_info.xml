@@ -36,9 +36,9 @@
          scaleType="centerInside" here (rather than the scaleType="center"
          we use in portrait mode, where photos are drawn at their true size.) -->
     <ImageView android:id="@+id/photo"
-               android:layout_width="96px"
-               android:layout_height="96px"
-               android:scaleType="centerInside"
+               android:layout_width="116px"
+               android:layout_height="116px"
+               android:scaleType="center"
                android:background="@drawable/incall_photo_border"
                />
 
@@ -62,7 +62,19 @@
                   android:layout_marginBottom="4dip"
                   android:paddingRight="4dip"
                   />
-
+        <!-- Organization, if we set it shown. -->
+        <TextView android:id="@+id/organization"
+                  android:gravity="center_horizontal"
+                  android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:textSize="18sp"
+                  android:singleLine="true"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="4dip"
+                  android:paddingRight="4dip"
+                  android:layout_marginTop="-2dip"
+                  android:visibility="gone"
+                  />
         <!-- Label (like "Mobile" or "Work", if present) and phone number, side by side -->
         <LinearLayout android:orientation="horizontal"
                       android:layout_width="wrap_content"

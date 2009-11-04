@@ -673,9 +673,11 @@ public class InCallScreen extends Activity
 
     @Override
     protected void onPause() {
-        if (DBG) log("onPause()...");
+//        if (DBG) log("onPause()...");
         super.onPause();
 
+if (mPhone.getState() != Phone.State.RINGING) {
+    if (DBG) log("onPause()...");
         mIsForegroundActivity = false;
 
         final PhoneApp app = PhoneApp.getInstance();
@@ -759,6 +761,7 @@ public class InCallScreen extends Activity
         // Make sure we revert the poke lock and wake lock when we move to
         // the background.
         app.updateWakeState();
+}
     }
 
     @Override
@@ -2448,6 +2451,15 @@ public class InCallScreen extends Activity
                 PhoneUtils.hangup(mPhone);
                 break;
 
+case R.id.menuAddBlackList:
+    if (VDBG) log("onClick: AddBlackList...");
+    //======
+    Connection c = PhoneUtils.getConnection(mPhone, PhoneUtils.getCurrentCall(mPhone));
+    String number = c.getAddress();
+    if (DBG) log("Add to Black List: " + number);
+    PhoneApp.getInstance().getSettings().addBlackList(number);
+    PhoneUtils.hangup(mPhone);
+    break;
             default:
                 Log.w(LOG_TAG,
                       "Got click from unexpected View ID " + id + " (View = " + view + ")");

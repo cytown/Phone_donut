@@ -58,6 +58,8 @@ import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneFactory;
 import com.android.internal.telephony.TelephonyIntents;
 
+import android.os.Vibrator;
+
 /**
  * Top-level Application class for the Phone app.
  */
@@ -181,6 +183,43 @@ public class PhoneApp extends Application {
 
     /** boolean indicating restoring mute state on InCallScreen.onResume() */
     private boolean mShouldRestoreMuteOnInCallResume;
+
+// add by cytown
+private CallFeaturesSetting mSettings;
+private static Vibrator mVibrator = null;
+private Handler vibrateHandler = new Handler();
+private Runnable vibrateRun = new Runnable() {
+    public void run() {
+        mVibrator.vibrate(70);
+        if (VDBG) Log.i(LOG_TAG, "vibrate on 45 sec");
+        vibrateHandler.postDelayed(this, 60000);
+    }
+};
+
+public void startVib45(long callDurationMsec) {
+    if (VDBG) Log.i(LOG_TAG, "vibrate start @" + callDurationMsec);
+    stopVib45();
+    vibrateHandler.postDelayed(vibrateRun, (callDurationMsec > 45000) ? 
+            45000 + 60000 - callDurationMsec : 45000 - callDurationMsec);
+}
+public void stopVib45() {
+    vibrateHandler.removeCallbacks(vibrateRun);
+}
+private final class TriVibRunnable implements Runnable {
+    private int v1, p1, v2;
+    TriVibRunnable(int a, int b, int c) {
+        v1 = a; p1 = b; v2 = c;
+    }
+    public void run() {
+        if (DBG) Log.i(LOG_TAG, "vibrate " + v1 + ":" + p1 + ":" + v2);
+        if (v1 > 0) mVibrator.vibrate(v1);
+        if (p1 > 0) SystemClock.sleep(p1);
+        if (v2 > 0) mVibrator.vibrate(v2);
+    }
+}
+public void vibrate(int v1, int p1, int v2) {
+    new Handler().post(new TriVibRunnable(v1, p1, v2));
+}
 
     /**
      * Set the restore mute state flag. Used when we are setting the mute state
@@ -422,6 +461,10 @@ public class PhoneApp extends Application {
         // start with the default value to set the mute state.
         mShouldRestoreMuteOnInCallResume = false;
 
+// add by cytown
+mSettings = CallFeaturesSetting.getInstance(PreferenceManager.getDefaultSharedPreferences(this));
+if (mVibrator == null) mVibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+
         // Register for Cdma Information Records
         // TODO(Moto): Merge
         // phone.registerCdmaInformationRecord(mHandler, EVENT_UNSOL_CDMA_INFO_RECORD, null);
@@ -439,6 +482,10 @@ public class PhoneApp extends Application {
     static PhoneApp getInstance() {
         return sMe;
     }
+
+CallFeaturesSetting getSettings() {
+    return mSettings;
+}
 
     Ringer getRinger() {
         return ringer;
@@ -675,7 +722,8 @@ public class PhoneApp extends Application {
                 // timeout (5s). This ensures that the screen goes to sleep
                 // as soon as acceptably possible after we the wake lock
                 // has been released.
-                pokeLockSetting |= LocalPowerManager.POKE_LOCK_SHORT_TIMEOUT;
+//                pokeLockSetting |= LocalPowerManager.POKE_LOCK_SHORT_TIMEOUT;
+pokeLockSetting |= mSettings.mScreenAwake ? LocalPowerManager.POKE_LOCK_MEDIUM_TIMEOUT : LocalPowerManager.POKE_LOCK_SHORT_TIMEOUT;
                 break;
 
             case MEDIUM:
@@ -839,7 +887,8 @@ public class PhoneApp extends Application {
                 // holding the phone up to their face.  Here we use a
                 // special screen timeout value specific to the in-call
                 // screen, purely to save battery life.
-                setScreenTimeout(ScreenTimeoutDuration.MEDIUM);
+//                setScreenTimeout(ScreenTimeoutDuration.MEDIUM);
+setScreenTimeout(mSettings.mScreenAwake ? ScreenTimeoutDuration.DEFAULT : ScreenTimeoutDuration.MEDIUM);
             }
         }
 
