@@ -1176,8 +1176,8 @@ if (updateName && mSettings.mShowOrgan) {
     }
 
 private void updateOrganization(final long person_id) {
-    new android.os.Handler().post(new Runnable() {
-        public void run() {
+//    new android.os.Handler().post(new Runnable() {
+//        public void run() {
             android.database.Cursor c = CallCard.this.getContext().getContentResolver().query(Organizations.CONTENT_URI,
                     new String[] { Organizations.COMPANY },
                     Organizations.PERSON_ID + " = ? and " + Organizations.ISPRIMARY + " > ?", new String[] { person_id + "", "0" },
@@ -1195,8 +1195,8 @@ private void updateOrganization(final long person_id) {
                 }
                 c.close();
             }
-        }
-    });
+//        }
+//    });
 }
 
     private String getPresentationString(int presentation) {
