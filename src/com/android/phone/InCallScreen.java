@@ -738,11 +738,6 @@ if (mPhone.getState() != Phone.State.RINGING) {
         // Re-enable the status bar (which we disabled in onResume().)
         NotificationMgr.getDefault().getStatusBarMgr().enableExpandedView(true);
 
-        // Unregister for broadcast intents.  (These affect the visible UI
-        // of the InCallScreen, so we only care about them while we're in the
-        // foreground.)
-        unregisterReceiver(mReceiver);
-
         // Re-enable "user activity" for touch events.
         // We actually do this slightly *after* onPause(), to work around a
         // race condition where a touch can come in after we've paused
@@ -762,6 +757,11 @@ if (mPhone.getState() != Phone.State.RINGING) {
         // the background.
         app.updateWakeState();
 }
+        // Unregister for broadcast intents.  (These affect the visible UI
+        // of the InCallScreen, so we only care about them while we're in the
+        // foreground.)
+        unregisterReceiver(mReceiver);
+
     }
 
     @Override
