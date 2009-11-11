@@ -43,6 +43,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import android.provider.Contacts.Organizations;
+//Geesun 
+import android.widget.Toast;
+import com.android.phone.location.LocationInfo;
 
 /**
  * "Call card" UI element: the in-call screen contains a tiled layout of call
@@ -87,6 +90,8 @@ public class CallCard extends FrameLayout
     private TextView mName;
     private TextView mPhoneNumber;
     private TextView mLabel;
+    //Geesun
+    private TextView mCity;
 
     // "Other call" info area
     private ImageView mOtherCallOngoingIcon;
@@ -116,7 +121,8 @@ public class CallCard extends FrameLayout
 // add by cytown
 private CallFeaturesSetting mSettings;
 private TextView mOrganization;
-
+    //Geesun 
+    Context mContext;
     public CallCard(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -130,6 +136,8 @@ private TextView mOrganization;
                 R.layout.call_card,  // resource
                 this,                // root
                 true);
+        //Geesun
+        mContext = context;
 
         mApplication = PhoneApp.getInstance();
 
@@ -186,7 +194,11 @@ mSettings = CallFeaturesSetting.getInstance(android.preference.PreferenceManager
         mName = (TextView) findViewById(R.id.name);
         mPhoneNumber = (TextView) findViewById(R.id.phoneNumber);
         mLabel = (TextView) findViewById(R.id.label);
-mOrganization = (TextView) findViewById(R.id.organization);
+
+        //Geesun
+        mCity = (TextView) findViewById(R.id.city);
+        mOrganization =  (TextView) findViewById(R.id.organization);
+
 
         // "Other call" info area
         mOtherCallOngoingIcon = (ImageView) findViewById(R.id.otherCallOngoingIcon);
@@ -1076,6 +1088,8 @@ mOrganization = (TextView) findViewById(R.id.organization);
         String displayNumber = null;
         String label = null;
         Uri personUri = null;
+        //Geesun
+        String city = null;
 
 boolean updateName = false;
 
@@ -1122,6 +1136,12 @@ boolean updateName = false;
 updateName = true;
                 }
             }
+
+            //Geesun
+            if(!TextUtils.isEmpty(info.phoneNumber)){
+                LocationInfo  location = new LocationInfo(mContext,info.phoneNumber);
+                city = location.getLocation();
+            }
             personUri = ContentUris.withAppendedId(People.CONTENT_URI, info.person_id);
         } else {
             name =  getPresentationString(presentation);
@@ -1165,6 +1185,14 @@ if (updateName && mSettings.mShowOrgan) {
             mPhoneNumber.setVisibility(View.VISIBLE);
         } else {
             mPhoneNumber.setVisibility(View.GONE);
+        }
+
+        //Geesun
+        if(city != null){
+            mCity.setText(city);
+            mCity.setVisibility(View.VISIBLE);
+        }else{
+            mCity.setVisibility(View.GONE);
         }
 
         if (label != null) {
@@ -1242,6 +1270,8 @@ private void updateOrganization(final long person_id) {
         mPhoneNumber.setVisibility(View.GONE);
 
         mLabel.setVisibility(View.GONE);
+        //Geesun
+        mCity.setVisibility(View.GONE);
 
         // TODO: consider also showing names / numbers / photos of some of the
         // people on the conference here, so you can see that info without
@@ -1270,6 +1300,8 @@ private void updateOrganization(final long person_id) {
         mName.setVisibility(View.GONE);
         mPhoneNumber.setVisibility(View.GONE);
         mLabel.setVisibility(View.GONE);
+        //Geesun
+        mCity.setVisibility(View.GONE);
     }
 
     /**
