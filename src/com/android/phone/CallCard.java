@@ -43,9 +43,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import android.provider.Contacts.Organizations;
-//Geesun 
-import android.widget.Toast;
-import com.android.phone.location.LocationInfo;
+import com.android.phone.location.PhoneLocation;
 
 /**
  * "Call card" UI element: the in-call screen contains a tiled layout of call
@@ -121,8 +119,7 @@ public class CallCard extends FrameLayout
 // add by cytown
 private CallFeaturesSetting mSettings;
 private TextView mOrganization;
-    //Geesun 
-    Context mContext;
+
     public CallCard(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -136,8 +133,6 @@ private TextView mOrganization;
                 R.layout.call_card,  // resource
                 this,                // root
                 true);
-        //Geesun
-        mContext = context;
 
         mApplication = PhoneApp.getInstance();
 
@@ -1137,11 +1132,11 @@ updateName = true;
                 }
             }
 
-            //Geesun
-            if(!TextUtils.isEmpty(info.phoneNumber)){
-                LocationInfo  location = new LocationInfo(mContext,info.phoneNumber);
-                city = location.getLocation();
-            }
+if(!TextUtils.isEmpty(info.phoneNumber)){
+    String cityinfo = PhoneLocation.getLocationFromPhone(info.phoneNumber);
+    String[] loc = cityinfo == null ? new String[0] : cityinfo.split(",");
+    if (loc.length == 2) city = loc[1];
+}
             personUri = ContentUris.withAppendedId(People.CONTENT_URI, info.person_id);
         } else {
             name =  getPresentationString(presentation);
