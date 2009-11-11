@@ -65,7 +65,7 @@
     <TextView android:id="@+id/organization"
               android:gravity="center_horizontal"
               android:textAppearance="?android:attr/textAppearanceMedium"
-              android:textSize="22sp"
+              android:textSize="20sp"
               android:singleLine="true"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
