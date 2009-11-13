@@ -157,6 +157,11 @@
         android:persistent="false"
         android:summary="@string/screen_awake_sum"/>
     <CheckBoxPreference
+        android:key="button_return_home"
+        android:title="@string/return_home"
+        android:persistent="false"
+        android:summary="@string/return_home_sum"/>
+    <CheckBoxPreference
         android:key="button_led_notify"
         android:title="@string/led_notify_call"
         android:persistent="false"
