@@ -1589,7 +1589,7 @@ if (mPhone.getState() != Phone.State.RINGING) {
 
         // Keep track of whether this call was user-initiated or not.
         // (This affects where we take the user next; see delayedCleanupAfterDisconnect().)
-        mShowCallLogAfterDisconnect = !c.isIncoming();
+        mShowCallLogAfterDisconnect = !c.isIncoming() && CallFeaturesSetting.getInstance(android.preference.PreferenceManager.getDefaultSharedPreferences(this)).mReturnHome;
 
         // We bail out immediately (and *don't* display the "call ended"
         // state at all) in a couple of cases, including those where we
