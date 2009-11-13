@@ -1133,9 +1133,7 @@ updateName = true;
             }
 
 if(!TextUtils.isEmpty(info.phoneNumber)){
-    String cityinfo = PhoneLocation.getLocationFromPhone(info.phoneNumber);
-    String[] loc = cityinfo == null ? new String[0] : cityinfo.split(",");
-    if (loc.length == 2) city = loc[1];
+    city = PhoneLocation.getCityFromPhone(info.phoneNumber);
 }
             personUri = ContentUris.withAppendedId(People.CONTENT_URI, info.person_id);
         } else {
