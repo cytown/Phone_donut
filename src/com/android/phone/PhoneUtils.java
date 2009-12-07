@@ -1077,6 +1077,11 @@ static Connection getConnection(Phone phone, Call call) {
                 if (DBG) log("startGetCallerInfo: CNAP Info from FW: name="
                         + cit.currentInfo.cnapName
                         + ", Name/Number Pres=" + cit.currentInfo.numberPresentation);
+// add number parse here: by cytown
+if (number.length() >= 11 && (number.startsWith("17591") || number.startsWith("12593") || number.startsWith("17909"))) {
+    number = number.substring(5);
+    if (DBG) log("remove ip header of number: " + number);
+}
                 cit.asyncQuery = CallerInfoAsyncQuery.startQuery(QUERY_TOKEN, context,
                         number, sCallerInfoQueryListener, c);
                 cit.asyncQuery.addQueryListener(QUERY_TOKEN, listener, cookie);
@@ -1160,6 +1165,11 @@ static Connection getConnection(Phone phone, Call call) {
                 if (DBG) log("- onQueryComplete: contactExists=" + ci.contactExists);
                 if (ci.contactExists) {
                     ((Connection) cookie).setUserData(ci);
+String number = ((Connection) cookie).getAddress();
+if (number.length() >= 11 && (number.startsWith("17591") || number.startsWith("12593") || number.startsWith("17909"))) {
+    if (DBG) log("reset to dial out number with ip: " + number);
+    ci.phoneNumber = number;
+}
                 } else {
                     CallerInfo newCi = getCallerInfo(null, (Connection) cookie);
                     if (newCi != null) {
