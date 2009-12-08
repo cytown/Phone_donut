@@ -278,6 +278,7 @@ mSettings = CallFeaturesSetting.getInstance(PreferenceManager.getDefaultSharedPr
         boolean provisioned = Settings.Secure.getInt(mPhone.getContext().getContentResolver(),
             Settings.Secure.DEVICE_PROVISIONED, 0) != 0;
 String number = c!=null?c.getAddress():"0000";
+if (android.text.TextUtils.isEmpty(number)) number = "0000";
 if (DBG) log("incoming number is: " + number);
 
         if (!provisioned) {
