@@ -59,6 +59,8 @@ import com.android.internal.telephony.PhoneFactory;
 import com.android.internal.telephony.TelephonyIntents;
 
 import android.os.Vibrator;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 
 /**
  * Top-level Application class for the Phone app.
@@ -185,25 +187,22 @@ public class PhoneApp extends Application {
     private boolean mShouldRestoreMuteOnInCallResume;
 
 // add by cytown
+private static final String ACTION_VIBRATE_45 = "com.android.phone.PhoneApp.ACTION_VIBRATE_45";
 private CallFeaturesSetting mSettings;
+private static PendingIntent mVibrateIntent;
 private static Vibrator mVibrator = null;
-private Handler vibrateHandler = new Handler();
-private Runnable vibrateRun = new Runnable() {
-    public void run() {
-        mVibrator.vibrate(70);
-        if (VDBG) Log.i(LOG_TAG, "vibrate on 45 sec");
-        vibrateHandler.postDelayed(this, 60000);
-    }
-};
+private static AlarmManager mAM;
 
 public void startVib45(long callDurationMsec) {
     if (VDBG) Log.i(LOG_TAG, "vibrate start @" + callDurationMsec);
     stopVib45();
-    vibrateHandler.postDelayed(vibrateRun, (callDurationMsec > 45000) ? 
-            45000 + 60000 - callDurationMsec : 45000 - callDurationMsec);
+    long nextalarm = SystemClock.elapsedRealtime() + ((callDurationMsec > 45000) ? 45000 + 60000 - callDurationMsec : 45000 - callDurationMsec);
+java.lang.System.out.println("am at: " + nextalarm);
+    mAM.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, nextalarm, mVibrateIntent);
 }
 public void stopVib45() {
-    vibrateHandler.removeCallbacks(vibrateRun);
+    if (VDBG) Log.i(LOG_TAG, "vibrate stop @" + SystemClock.elapsedRealtime());
+    mAM.cancel(mVibrateIntent);
 }
 private final class TriVibRunnable implements Runnable {
     private int v1, p1, v2;
@@ -414,6 +413,7 @@ public void vibrate(int v1, int p1, int v2) {
             intentFilter.addAction(TelephonyIntents.ACTION_RADIO_TECHNOLOGY_CHANGED);
             intentFilter.addAction(TelephonyIntents.ACTION_SERVICE_STATE_CHANGED);
             intentFilter.addAction(TelephonyIntents.ACTION_EMERGENCY_CALLBACK_MODE_CHANGED);
+intentFilter.addAction(ACTION_VIBRATE_45);
             registerReceiver(mReceiver, intentFilter);
 
             // Use a separate receiver for ACTION_MEDIA_BUTTON broadcasts,
@@ -463,7 +463,11 @@ public void vibrate(int v1, int p1, int v2) {
 
 // add by cytown
 mSettings = CallFeaturesSetting.getInstance(PreferenceManager.getDefaultSharedPreferences(this));
-if (mVibrator == null) mVibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+if (mVibrator == null) {
+    mVibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+    mAM = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+    mVibrateIntent = PendingIntent.getBroadcast(this, 0, new Intent(ACTION_VIBRATE_45), 0);
+}
 
         // Register for Cdma Information Records
         // TODO(Moto): Merge
@@ -1176,6 +1180,16 @@ setScreenTimeout(mSettings.mScreenAwake ? ScreenTimeoutDuration.DEFAULT : Screen
                 EcbmAlarm.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 EcbmAlarm.setClassName("com.android.phone", EmergencyCallbackMode.class.getName());
                 startActivity(EcbmAlarm);
+// Vibrate 45 sec receiver add by cytown
+} else if (action.equals(ACTION_VIBRATE_45)) {
+    if (VDBG) Log.d(LOG_TAG, "mReceiver: ACTION_VIBRATE_45");
+    mAM.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 60000, mVibrateIntent);
+    if (DBG) Log.i(LOG_TAG, "vibrate on 45 sec");
+    mVibrator.vibrate(70);
+    SystemClock.sleep(70);
+    mVibrator.cancel();
+    if (VDBG) Log.d(LOG_TAG, "mReceiver: force vib cancel");
+    //vibrate(70, 70, -1);
             }
         }
     }
