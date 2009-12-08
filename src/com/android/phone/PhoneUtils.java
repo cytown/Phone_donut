@@ -1078,7 +1078,7 @@ static Connection getConnection(Phone phone, Call call) {
                         + cit.currentInfo.cnapName
                         + ", Name/Number Pres=" + cit.currentInfo.numberPresentation);
 // add number parse here: by cytown
-if (number.length() >= 11 && (number.startsWith("17591") || number.startsWith("12593") || number.startsWith("17909"))) {
+if (number.length() >= 11 && (number.startsWith("17951") || number.startsWith("12593") || number.startsWith("17909"))) {
     number = number.substring(5);
     if (DBG) log("remove ip header of number: " + number);
 }
@@ -1166,7 +1166,7 @@ if (number.length() >= 11 && (number.startsWith("17591") || number.startsWith("1
                 if (ci.contactExists) {
                     ((Connection) cookie).setUserData(ci);
 String number = ((Connection) cookie).getAddress();
-if (number.length() >= 11 && (number.startsWith("17591") || number.startsWith("12593") || number.startsWith("17909"))) {
+if (number.length() >= 11 && (number.startsWith("17951") || number.startsWith("12593") || number.startsWith("17909"))) {
     if (DBG) log("reset to dial out number with ip: " + number);
     ci.phoneNumber = number;
 }
