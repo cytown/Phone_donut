@@ -584,7 +584,7 @@
     <!-- no translation found for dtmf_tone_entries:1 (2883365539347850535) -->
     <!-- no translation found for network_message (5673682885938122239) -->
     <skip />
-<string name="advanced_setting">高级设置 V.21</string>
+<string name="advanced_setting">高级设置 V.22</string>
 <string name="vibrate_outgoing">接听震动</string>
 <string name="vibrate_outgoing_sum">当对方接听时震动.</string>
 <string name="vibrate_45">45秒震动</string>
