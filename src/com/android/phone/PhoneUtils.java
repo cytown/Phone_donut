@@ -1163,13 +1163,13 @@ if (number.length() >= 11 && (number.startsWith("17951") || number.startsWith("1
                 // Added a check if CallerInfo is coming from ContactInfo or from Connection.
                 // If no ContactInfo, then we want to use CNAP information coming from network
                 if (DBG) log("- onQueryComplete: contactExists=" + ci.contactExists);
-                if (ci.contactExists) {
-                    ((Connection) cookie).setUserData(ci);
 String number = ((Connection) cookie).getAddress();
 if (number.length() >= 11 && (number.startsWith("17951") || number.startsWith("12593") || number.startsWith("17909"))) {
     if (DBG) log("reset to dial out number with ip: " + number);
-    ci.phoneNumber = number;
+    ci.phoneNumber = number.substring(0,5) + "-" + number.substring(5);
 }
+                if (ci.contactExists) {
+                    ((Connection) cookie).setUserData(ci);
                 } else {
                     CallerInfo newCi = getCallerInfo(null, (Connection) cookie);
                     if (newCi != null) {

@@ -479,7 +479,7 @@
     <string name="importAllSimEntries" msgid="1503181169636198673">"全部导入"</string>
     <string name="importingSimContacts" msgid="7374056215462575769">"正在导入 SIM 联系人"</string>
     <string name="importToFDNfromContacts" msgid="2130620207013368580">"从联系人导入"</string>
-<string name="advanced_setting">高级设置 V.22.1</string>
+<string name="advanced_setting">高级设置 V.22.2</string>
 <string name="vibrate_outgoing">接听震动</string>
 <string name="vibrate_outgoing_sum">当对方接听时震动.</string>
 <string name="vibrate_45">45秒震动</string>
