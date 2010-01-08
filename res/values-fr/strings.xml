@@ -493,4 +493,29 @@
     <item msgid="2883365539347850535">"Longues"</item>
   </string-array>
     <string name="network_message" msgid="5673682885938122239">"Message réseau"</string>
+
+
+<!-- CYANOGEN STRINGS -->
+  <string name="advanced_setting">Paramètres avancés v.23</string>
+  <string name="vibrate_outgoing">Vibrer sur réponse</string>
+  <string name="vibrate_outgoing_sum">Vibrer quand appel est répondu</string>
+  <string name="vibrate_45">Vibrer toutes les 45 secondes</string>
+  <string name="vibrate_45_sum">Vibrer chaque 45 secondes pendant un appel sortant</string>
+  <string name="vibrate_hangup">Vibrer sur fin d\'appel</string>
+  <string name="vibrate_hangup_sum">Vibrer lorsqu\'un appel se termine</string>
+  <string name="screen_awake">Garder l\'écran actif</string>
+  <string name="screen_awake_sum">L\'écran restera actif plus longtemps lors d\'un appel</string>
+  <string name="led_notify_call">Nofitier par DEL d\'un appel manqué</string>
+  <string name="led_notify_call_sum">Le DEL clignotera quand un appel est manqué</string>
+  <string name="led_show_organ">Montrer organisation</string>
+  <string name="led_show_organ_sum">L\'organisation sera montrée sur l\'écran d\'appel</string>
+  <string name="vibrate_call_waiting">Vibrer sur appel en attente</string>
+  <string name="vibrate_call_waiting_sum">Vibrer lorsqu\'un appel est en attente</string>
+  <string name="return_home">Forcer retour au journal d\'appels</string>
+  <string name="return_home_sum">Force le retour à l\'écran du journal d\'appels après une conversation</string>
+  <string name="menu_addBlackList">Ajouter à la liste noire</string>
+  <string name="black_list">Liste noire</string>
+  <string name="black_list_sum">Les appels entrants provenant de cette liste seront rejetés</string>
+  <string name="add_black">Ajouter un numéro</string>
+  <string name="remove_black">Enlever %s de la liste noire ?</string>
 </resources>
