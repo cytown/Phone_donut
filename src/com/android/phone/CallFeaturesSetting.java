@@ -242,6 +242,9 @@ static boolean mShowOrgan;
 private static final String BUTTON_VIBRATE_CALL_WAITING = "button_vibrate_call_waiting";
 private CheckBoxPreference mButtonVibCallWaiting;
 static boolean mVibCallWaiting;
+static boolean mTurnSilence;
+private static final String BUTTON_TURN_SILENCE     = "button_turn_silence";
+private CheckBoxPreference mButtonTurnSilence;
 
 private static final String BUTTON_ADD_BLACK = "button_add_black";
 private static final String CATEGORY_BLACK   = "cat_black_list";
@@ -1621,6 +1624,8 @@ mButtonLedNotify   = (CheckBoxPreference) prefSet.findPreference(BUTTON_LED_NOTI
 mButtonLedNotify.setChecked(mLedNotify);
 mButtonShowOrgan   = (CheckBoxPreference) prefSet.findPreference(BUTTON_SHOW_ORGAN);
 mButtonShowOrgan.setChecked(mShowOrgan);
+mButtonTurnSilence = (CheckBoxPreference) prefSet.findPreference(BUTTON_TURN_SILENCE);
+mButtonTurnSilence.setChecked(mTurnSilence);
 mButtonVibCallWaiting = (CheckBoxPreference) prefSet.findPreference(BUTTON_VIBRATE_CALL_WAITING);
 mButtonVibCallWaiting.setChecked(mVibCallWaiting);
 mButtonAddBlack = (EditPhoneNumberPreference) prefSet.findPreference(BUTTON_ADD_BLACK);
@@ -1977,6 +1982,7 @@ private void init(SharedPreferences pref) {
     mReturnHome = pref.getBoolean(BUTTON_RETURN_HOME, true);
     mLedNotify   = pref.getBoolean(BUTTON_LED_NOTIFY, true);
     mShowOrgan   = pref.getBoolean(BUTTON_SHOW_ORGAN, false);
+    mTurnSilence = pref.getBoolean(BUTTON_TURN_SILENCE, false);
     mVibCallWaiting = pref.getBoolean(BUTTON_VIBRATE_CALL_WAITING, false);
     ObjectInputStream ois = null;
     boolean correctVer = false;
@@ -2085,6 +2091,7 @@ protected void onDestroy() {
     outState.putBoolean(BUTTON_RETURN_HOME, mButtonReturnHome.isChecked());
     outState.putBoolean(BUTTON_LED_NOTIFY, mButtonLedNotify.isChecked());
     outState.putBoolean(BUTTON_SHOW_ORGAN, mButtonShowOrgan.isChecked());
+    outState.putBoolean(BUTTON_TURN_SILENCE, mButtonTurnSilence.isChecked());
     outState.putBoolean(BUTTON_VIBRATE_CALL_WAITING, mButtonVibCallWaiting.isChecked());
     outState.commit();
     init(pref);
