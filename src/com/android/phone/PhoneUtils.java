@@ -1141,7 +1141,11 @@ if (number.length() >= 11 && (number.startsWith("17951") || number.startsWith("1
             }
         } else {
             cit = new CallerInfoToken();
-            cit.currentInfo = (CallerInfo) userDataObject;
+            if (userDataObject instanceof String) { // only blacklist will cause this, so just ignore this.
+                cit.currentInfo = new CallerInfo();
+            } else {
+                cit.currentInfo = (CallerInfo) userDataObject;
+            }
             cit.asyncQuery = null;
             cit.isFinal = true;
             // since the query is already done, call the listener.
