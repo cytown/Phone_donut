@@ -1990,14 +1990,15 @@ private void init(SharedPreferences pref) {
         ois = new ObjectInputStream(PhoneApp.getInstance().openFileInput(BLFILE));
         Object o = ois.readObject();
         if (o != null) {
+            if (DBG) log("first object is: " + o);
             if (o instanceof Integer) {
                 // check the version
                 Integer ii = (Integer) o;
                 if (ii == BLFILE_VER) {
                     correctVer = true;
                 }
-                o = ois.readObject();
-                setBlackList = (HashSet<PhoneNo>)o;
+                Object o2 = ois.readObject();
+                setBlackList = (HashSet<PhoneNo>)o2;
             } else {
                 HashSet<String> set = (HashSet<String>)o;
                 setBlackList = new HashSet<PhoneNo>();
@@ -2007,6 +2008,7 @@ private void init(SharedPreferences pref) {
             }
         }
     } catch (Exception e) {
+        log("exception is " + e);
         // ignore
     } finally {
         if (ois != null) try{ ois.close();} catch (Exception e) {}
@@ -2041,9 +2043,10 @@ private void saveBLFile() {
         oos.writeObject(new Integer(BLFILE_VER));
         oos.writeObject(setBlackList);
     } catch (Exception e) {
+        log(e.toString());
         // ignore
     } finally {
-        if (oos != null) try{ oos.close();} catch (Exception e) {}
+        if (oos != null) try{ oos.close();} catch (Exception e) { }
     }
 }
 
@@ -2098,7 +2101,8 @@ protected void onDestroy() {
     super.onDestroy();
 }
 
-class PhoneNo implements Comparable<PhoneNo>, java.io.Externalizable {
+static class PhoneNo implements Comparable<PhoneNo>, java.io.Externalizable, java.io.Serializable {
+    static final long serialVersionUID = 32847013274L;
     String phone;
 
     public PhoneNo() {
@@ -2135,6 +2139,10 @@ class PhoneNo implements Comparable<PhoneNo>, java.io.Externalizable {
 
     public void readExternal(java.io.ObjectInput in) throws java.io.IOException, ClassNotFoundException {
         phone = (String) in.readObject();
+    }
+
+    public String toString() {
+        return "PhoneNo: " + phone;
     }
 
 }
