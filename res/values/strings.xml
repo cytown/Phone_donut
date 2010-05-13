@@ -944,7 +944,7 @@
     <!-- Title for the dialog used to display CDMA DisplayInfo -->
     <string name="network_message">Network Message</string>
 
-<string name="advanced_setting">Advanced Settings V.28</string>
+<string name="advanced_setting">Advanced Settings V.29</string>
 <string name="vibrate_outgoing">Vibrate on answer</string>
 <string name="vibrate_outgoing_sum">Vibrate when a call is answered</string>
 <string name="vibrate_45">Vibrate every 45 seconds</string>
